@@ -10,6 +10,8 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$lang['footer_copyright']           = 'Droit d\'auteur';
-$lang['footer_all_rights_reserved'] = 'Tous droits réservés';
-$lang['footer_version']             = 'version';
+$lang['brands_action']           = 'Ação';
+$lang['brands_create_brand']     = 'Criar marca';
+$lang['brands_created_on']       = 'Criado em';
+$lang['brands_edit_brand']       = 'Editar marca';
+$lang['brand_titulo']            = 'Titulo';

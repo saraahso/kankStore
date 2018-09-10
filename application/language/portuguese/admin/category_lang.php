@@ -10,4 +10,8 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$lang['database_name'] = 'Nom';
+$lang['categories_action']              = 'Ação';
+$lang['categories_create_category']     = 'Criar categoria';
+$lang['categories_created_on']          = 'Criado em';
+$lang['categories_edit_category']       = 'Editar categria';
+$lang['category_titulo']                = 'Titulo';
