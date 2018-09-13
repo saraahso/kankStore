@@ -404,6 +404,11 @@ ALTER TABLE `users_groups`
 ALTER TABLE `venda`
   MODIFY `ven_id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de tabela `produto`
+--
+ALTER TABLE `produto`
+  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- Restrições para dumps de tabelas
 --
 

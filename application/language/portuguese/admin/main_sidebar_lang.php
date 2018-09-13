@@ -21,6 +21,7 @@ $lang['menu_search'] = 'Pesquisa';
 
 
 /* * */$lang['menu_administration']             = 'Administração';
+/* ****** */$lang['menu_product']               = 'Produtos';
 /* ****** */$lang['menu_categories']            = 'Categorias';
 /* ****** */$lang['menu_brands']                = 'Marcas';
 /* ****** */$lang['menu_users']                 = 'Usuários';

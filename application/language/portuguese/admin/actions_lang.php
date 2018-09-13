@@ -16,7 +16,7 @@ $lang['actions_default_values'] = 'Valores padrões';
 $lang['actions_edit']           = '<i class="fa fa-pencil"></i> Editar';
 $lang['actions_ok']             = 'Ok';
 $lang['actions_no']             = 'Não';
-$lang['actions_reset']          = 'Reiniciar';
+$lang['actions_reset']          = 'Limpar';
 $lang['actions_see']            = 'Ver';
 $lang['actions_submit']         = 'Enviar';
 $lang['actions_yes']            = 'Sim';

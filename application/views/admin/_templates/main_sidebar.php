@@ -65,6 +65,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<li class="header text-uppercase">
 				<?php echo lang('menu_administration'); ?>
 			</li>
+
+			<li class="<?=active_link_controller('products')?>">
+				<a href="<?php echo site_url('admin/product'); ?>">
+					<i class="fa fa-barcode"></i>
+					<span>
+						<?php echo lang('menu_product'); ?>
+					</span>
+				</a>
+			</li>
+
 			<li class="<?=active_link_controller('categories')?>">
 				<a href="<?php echo site_url('admin/category'); ?>">
 					<i class="fa fa-hashtag"></i>
