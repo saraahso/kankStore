@@ -23,3 +23,4 @@ $lang['itv_qtd']                    = 'Quantidade ';
 $lang['product_category']           = 'Categoria';
 $lang['product_brand']              = 'Marca';
 $lang['product_sell_value']         = 'Valor da unidade';
+$lang['product_search']             = 'Selecionar Produto';

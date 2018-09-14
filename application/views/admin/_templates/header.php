@@ -38,6 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?php echo base_url($frameworks_dir . '/ionicons/css/ionicons.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo base_url($frameworks_dir . '/adminlte/css/adminlte.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo base_url($frameworks_dir . '/adminlte/css/skins/skin-purple.min.css'); ?>">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
 	<?php if ($mobile === FALSE && $admin_prefs['transition_page'] == TRUE): ?>
 	<link rel="stylesheet" href="<?php echo base_url($plugins_dir . '/animsition/animsition.min.css'); ?>">
 	<?php endif; ?>
@@ -45,9 +46,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?php echo base_url($plugins_dir . '/colorpickersliders/colorpickersliders.min.css'); ?>">
 	<?php endif; ?>
 	<link rel="stylesheet" href="<?php echo base_url($frameworks_dir . '/domprojects/css/dp.min.css'); ?>">
+
 	<?php if ($mobile === FALSE): ?>
 	<!--[if lt IE 9]>
-            <script src="<?php echo base_url($plugins_dir . '/html5shiv/html5shiv.min.js'); ?>"></script>
+		<
+		script src =
+			"<?php echo base_url($plugins_dir . '/html5shiv/html5shiv.min.js'); ?>" >
+	</script>
 	<script src="<?php echo base_url($plugins_dir . '/respond/respond.min.js'); ?>"></script>
 	<![endif]-->
 <?php endif; ?>
