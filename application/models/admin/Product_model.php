@@ -52,7 +52,14 @@ class Product_model extends CI_Model {
     }
 
     public function edit($name,$size,$color,$stock,$category,$brand,$cost_value,$sell_value, $id){
-        $dados['prod_nome'] = $titulo;
+        $dados['prod_nome']             = $name;
+        $dados['prod_tamanho']          = $size;
+        $dados['prod_cor']              = $color;
+        $dados['prod_estoque']          = $stock;
+        $dados['prod_categoria']        = $category;
+        $dados['prod_marca']            = $brand;
+        $dados['prod_valor_de_custo']   = $cost_value;
+        $dados['prod_valor_de_venda']   = $sell_value;
         $this->db->where('prod_id', $id);
         return $this->db->update('produto', $dados);
     }

@@ -16,6 +16,16 @@ class Category_model extends CI_Model {
         return $this->db->get('categoria')->result();
     }
 
+    public function list_categories_drop(){
+        $this->db->order_by("cat_titulo", "ASC");
+        $results =  $this->db->get('categoria')->result();
+        $list = array();
+        foreach ($results as $result) {
+            $list[$result->cat_id] = $result->cat_titulo;                
+        }
+        return $list;
+    }
+
     public function save($titulo){
         $dados['cat_titulo'] = $titulo;
         return $this->db->insert('categoria', $dados);

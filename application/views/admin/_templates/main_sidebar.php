@@ -66,6 +66,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php echo lang('menu_administration'); ?>
 			</li>
 
+			<li class="<?=active_link_controller('sales')?>">
+				<a href="<?php echo site_url('admin/sale'); ?>">
+					<i class="fa fa-money"></i>
+					<span>
+						<?php echo lang('menu_sale'); ?>
+					</span>
+				</a>
+			</li>
+
 			<li class="<?=active_link_controller('products')?>">
 				<a href="<?php echo site_url('admin/product'); ?>">
 					<i class="fa fa-barcode"></i>

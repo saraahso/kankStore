@@ -16,6 +16,16 @@ class Brand_model extends CI_Model {
         return $this->db->get('marca')->result();
     }
 
+    public function list_brands_drop(){
+        $this->db->order_by("mar_titulo", "ASC");
+        $results =  $this->db->get('marca')->result();
+        $list = array();
+        foreach ($results as $result) {
+            $list[$result->mar_id] = $result->mar_titulo;                
+        }
+        return $list;
+    }
+
     public function save($titulo){
         $dados['mar_titulo'] = $titulo;
         return $this->db->insert('marca', $dados);

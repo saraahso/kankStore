@@ -15,48 +15,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="box">
 					<div class="box-header with-border">
 						<h3 class="box-title">
-							<?php echo lang('products_create_product'); ?>
+							<?php echo lang('sales_create_sale'); ?>
 						</h3>
 					</div>
 					<div class="box-body">
 						<?php echo $message;?>
 
-						<?php echo form_open(current_url(), array('class' => 'form-horizontal', 'id' => 'form-create_product')); 
+						<?php echo form_open(current_url(), array('class' => 'form-horizontal', 'id' => 'form-create_sale')); 
 							
 						?>
 						<div class="form-group">
-							<?php echo lang('product_name', 'name', array('class' => 'col-sm-2 control-label')); ?>
+							<?php echo lang('sale_name', 'name', array('class' => 'col-sm-2 control-label')); ?>
 							<div class="col-sm-10">
 								<?php echo form_input($name);?>
 							</div>
 						</div>
 						<div class="form-group">
-							<?php echo lang('product_size', 'size', array('class' => 'col-sm-2 control-label')); ?>
+							<?php echo lang('sale_size', 'size', array('class' => 'col-sm-2 control-label')); ?>
 							<div class="col-sm-10">
 								<?php echo form_input($size);?>
 							</div>
 						</div>
 						<div class="form-group">
-							<?php echo lang('product_color', 'color', array('class' => 'col-sm-2 control-label')); ?>
+							<?php echo lang('sale_color', 'color', array('class' => 'col-sm-2 control-label')); ?>
 							<div class="col-sm-10">
 								<?php echo form_input($color);?>
 							</div>
 						</div>
 						<div class="form-group">
-							<?php echo lang('product_stock', 'stock', array('class' => 'col-sm-2 control-label')); ?>
+							<?php echo lang('sale_stock', 'stock', array('class' => 'col-sm-2 control-label')); ?>
 							<div class="col-sm-10">
 								<?php echo form_input($stock);?>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<?php echo lang('product_category', 'category', array('class' => 'col-sm-2 control-label')); ?>
+							<?php echo lang('sale_category', 'category', array('class' => 'col-sm-2 control-label')); ?>
 							<div class="col-sm-10">
 								<?php echo form_dropdown('category', $categories, '', array('class' => 'form-control')); ?>
 							</div>
 						</div>
 						<div class="form-group">
-							<?php echo lang('product_brand', 'brand',array('class' => 'col-sm-2 control-label')); ?>
+							<?php echo lang('sale_brand', 'brand',array('class' => 'col-sm-2 control-label')); ?>
 							<div class="col-sm-10">
 								<?php echo form_dropdown('brand', $brands, '', array('class' => 'form-control')); ?>
 							</div>
@@ -64,13 +64,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 						<div class="form-group">
-							<?php echo lang('product_cost_value', 'cost_value', array('class' => 'col-sm-2 control-label')); ?>
+							<?php echo lang('sale_cost_value', 'cost_value', array('class' => 'col-sm-2 control-label')); ?>
 							<div class="col-sm-10">
 								<?php echo form_input($cost_value);?>
 							</div>
 						</div>
 						<div class="form-group">
-							<?php echo lang('product_sell_value', 'sell_value', array('class' => 'col-sm-2 control-label')); ?>
+							<?php echo lang('sale_sell_value', 'sell_value', array('class' => 'col-sm-2 control-label')); ?>
 							<div class="col-sm-10">
 								<?php echo form_input($sell_value);?>
 							</div>
@@ -80,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div class="btn-group">
 									<?php echo form_button(array('type' => 'submit', 'class' => 'btn btn-primary btn-flat', 'content' => lang('actions_submit'))); ?>
 									<?php echo form_button(array('type' => 'reset', 'class' => 'btn btn-warning btn-flat', 'content' => lang('actions_reset'))); ?>
-									<?php echo anchor('admin/product', lang('actions_cancel'), array('class' => 'btn btn-default btn-flat')); ?>
+									<?php echo anchor('admin/sale', lang('actions_cancel'), array('class' => 'btn btn-default btn-flat')); ?>
 								</div>
 							</div>
 						</div>
