@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?php echo base_url($frameworks_dir . '/ionicons/css/ionicons.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo base_url($frameworks_dir . '/adminlte/css/adminlte.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo base_url($frameworks_dir . '/adminlte/css/skins/skin-purple.min.css'); ?>">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+	<link rel="stylesheet" href="<?php echo base_url($frameworks_dir . '/jquery-ui/jquery-ui.css'); ?>">
 	<?php if ($mobile === FALSE && $admin_prefs['transition_page'] == TRUE): ?>
 	<link rel="stylesheet" href="<?php echo base_url($plugins_dir . '/animsition/animsition.min.css'); ?>">
 	<?php endif; ?>
@@ -55,11 +55,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</script>
 	<script src="<?php echo base_url($plugins_dir . '/respond/respond.min.js'); ?>"></script>
 	<![endif]-->
-<?php endif; ?>
-    </head>
-    <body class="hold-transition skin-purple fixed sidebar-mini">
-<?php if ($mobile === FALSE && $admin_prefs['transition_page'] == TRUE): ?>
-        <div class="wrapper animsition">
-<?php else: ?>
-        <div class="wrapper">
-<?php endif; 
+	<?php endif; ?>
+</head>
+
+<body class="hold-transition skin-purple fixed sidebar-mini">
+	<?php if ($mobile === FALSE && $admin_prefs['transition_page'] == TRUE): ?>
+	<div class="wrapper animsition">
+		<?php else: ?>
+		<div class="wrapper">
+			<?php endif;

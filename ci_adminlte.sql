@@ -134,7 +134,6 @@ INSERT INTO `groups` (`id`, `name`, `description`, `bgcolor`) VALUES
 
 CREATE TABLE `item_venda` (
   `itv_id` int(11) NOT NULL,
-  `itv_cod_venda` int(11) NOT NULL,
   `itv_cod_prod` int(11) NOT NULL,
   `itv_qtd` int(11) NOT NULL,
   `itv_valor` float NOT NULL
@@ -263,7 +262,7 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 
 CREATE TABLE `venda` (
   `ven_id` int(11) NOT NULL,
-  `ven_data` datetime NOT NULL,
+  `ven_data` date NOT NULL,
   `ven_total` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

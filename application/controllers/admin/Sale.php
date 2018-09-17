@@ -45,19 +45,94 @@ class Sale extends Admin_Controller {
         }
     }
 
-    public function create()
-    {
+
+    public function getproducts(){
+		//$valor = $this->input->post("valor");
+		//$products = $this->modelsales->getproducts($valor);
+       //echo json_encode($products);
+
+       if (isset($_GET['term'])) {
+        $result = $this->modelsales->getproducts($_GET['term']);
+        if (count($result) > 0) {
+          foreach ($result as $row)
+          $result_array[] = array(
+              'label'       =>$row->prod_nome,
+              'codigo'         =>$row->prod_codigo,
+              'tamanho'         =>$row->prod_tamanho,
+              'cor'         =>$row->prod_cor,
+              'estoque'     =>$row->prod_estoque,
+              'preco'     =>$row->prod_valor_de_venda,
+            );
+          echo json_encode($result_array);
+        }
+      }
+    }
+
+    public function create(){
         /* Breadcrumbs */
         $this->breadcrumbs->unshift(2, lang('menu_sales_create'), 'admin/sale/create');
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-        $this->data['products'] = [];
-        /* Load Template */
-		$this->template->admin_render('admin/sale/create', $this->data);
-      
-        $keyword    =   $this->input->post('keyword');
-        $data['results']    =   $this->modelsales->search($keyword);
-        $this->load->view('admin/sale/create',$data);
+        
+        $this->form_validation->set_rules('date', 'lang:ven_date', 'required|date_valid');
+        $this->form_validation->set_rules('date', 'lang:ven_date', 'required|date_valid');
+        
+       
+        if ($this->form_validation->run() == TRUE)
+		{
+            $date = date("Y-m-d");
+            $idproduct      = $this->input->post('idproduct');
+            $total          = $this->input->post('total');
+            $quantity       = $this->input->post('quantity');
+            $totalprice     = $this->input->post('totalprice');
+
+            if($this->modelsales->save($date, $total) && $this->modelsales->saveItem($idproduct,$quantity,$totalprice) ){
+                $this->modelsales->updateProduct($idproduct, $quantity);
+                redirect('admin/sale/index', 'refresh');
+            }else{
+                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            }
+		}
+		else
+		{
+            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            
+            $date = date("Y-m-d");
+            $this->data['quantity'] = array(
+				'name'  => 'quantity',
+				'id'    => 'quantity',
+				'type'  => 'text',
+                'class' => 'form-control',
+				'value' => $this->form_validation->set_value('quantity'),
+            );
+            $this->data['titleP'] = array(
+				'name'  => 'titleP',
+				'id'    => 'titleP',
+				'type'  => 'text',
+                'class' => 'form-control',
+				'value' => $this->form_validation->set_value('titleP'),
+            );
+            $this->data['idproduct'] = array(
+				'name'  => 'idproduct',
+				'id'    => 'idproduct',
+				'type'  => 'text',
+                'class' => 'form-control',
+				'value' => $this->form_validation->set_value('idproduct'),
+            );
+            $this->data['total'] = array(
+				'name'  => 'total',
+				'id'    => 'total',
+                'type'  => 'text',
+                'placeholder' => '0.00',
+                'readonly'=>'true',
+                'class' => 'form-control',
+				'value' => $this->form_validation->set_value('total'),
+            );
+         
+            
+            /* Load Template */
+		    $this->template->admin_render('admin/sale/create', $this->data);
+        }
 
         
        
