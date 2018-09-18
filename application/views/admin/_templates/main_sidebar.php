@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<a href="<?php echo site_url('admin/sale'); ?>">
 					<i class="fa fa-money"></i>
 					<span>
-						<?php echo lang('menu_sale'); ?>
+						<?php echo lang('menu_sales'); ?>
 					</span>
 				</a>
 			</li>

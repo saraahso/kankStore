@@ -38,7 +38,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php echo form_input($titleP);?>
 							</div>
 							<div class="col-md-2">
-								<button id="btn-agregar" type="button" class="btn btn-success btn-flat btn-block"><span class="fa fa-plus"></span>
+								<button id="btn-agregar" type="button" class="btn btn-success btn-flat btn-block">
+									<span class="fa fa-plus"></span>
 									Adicionar</button>
 							</div>
 						</div>
@@ -75,8 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>
 							<div class="col-md-3">
 								<div class="input-group">
-									<span class="input-group-addon">Total:</span>
-
+									<?php echo lang('sale_total', 'total', array('class' => 'col-sm-2 control-label')); ?>
 									<?php echo form_input($total);?>
 								</div>
 							</div>
@@ -86,6 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
 								<div class="btn-group">
+
 									<?php echo form_button(array('type' => 'submit', 'class' => 'btn btn-primary btn-flat', 'content' => lang('actions_submit'))); ?>
 									<?php echo form_button(array('type' => 'reset', 'class' => 'btn btn-warning btn-flat', 'content' => lang('actions_reset'))); ?>
 									<?php echo anchor('admin/product', lang('actions_cancel'), array('class' => 'btn btn-default btn-flat')); ?>

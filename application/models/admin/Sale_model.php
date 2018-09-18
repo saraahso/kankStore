@@ -20,8 +20,15 @@ class Sale_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function list_sale($id){
+        $this->db->select('prod_nome, prod_codigo, prod_id, prod_categoria,prod_tamanho, prod_cor, prod_estoque, prod_valor_de_venda, cat_titulo, mar_titulo');
+        $this->db->from('venda');
+        $this->db->like('venda',$id);
+        return $this->db->get()->result();
+    }
+
     function getproducts($valor){
-        $this->db->select('prod_nome, prod_codigo, prod_categoria,prod_tamanho, prod_cor, prod_estoque, prod_valor_de_venda, cat_titulo, mar_titulo');
+        $this->db->select('prod_nome, prod_codigo, prod_id, prod_categoria,prod_tamanho, prod_cor, prod_estoque, prod_valor_de_venda, cat_titulo, mar_titulo');
         $this->db->from('produto');
         $this->db->join('categoria', 'produto.prod_categoria = categoria.cat_id');
         $this->db->join('marca', 'produto.prod_marca = marca.mar_id');
@@ -41,17 +48,16 @@ class Sale_model extends CI_Model {
         return $this->db->insert('venda', $dados);
     }
 
-    public function saveItem($idproduct,$quantity,$totalprice){
+    public function saveItem($idproduct, $quantity, $totalprice){
         $dados['itv_cod_prod']    = $idproduct;
-        $dados['itv_qtd']   = $quantity;
-        $dados['itv_valor']   = $totalprice;
+        $dados['itv_qtd']         = $quantity;
+        $dados['itv_valor']       = $totalprice;
         return $this->db->insert('item_venda', $dados);
     }
 
-    public function updateProduct($idproduct, $quantity){
-        $this->db->select('prod_id, sum(prod_estoque-',$quantity,')');
-        $this->db->from('produto');
-        $this->db->where('produto_codigo', $idproduct);
+    public function updateProduct($idproduct, $quantity, $stock){
+        $this->db->set('prod_estoque', $stock. '-' .$quantity , FALSE);
+        $this->db->where('prod_id', $idproduct);
         return $this->db->update('produto');
     }
 }

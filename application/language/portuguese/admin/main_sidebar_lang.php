@@ -21,8 +21,8 @@ $lang['menu_search'] = 'Pesquisa';
 
 
 /* * */$lang['menu_administration']                 = 'Administração';
-/* ****** */$lang['menu_sale']                      = 'Vendas';
-/* *********** */$lang['menu_sale_see']             = 'Venda';
+/* ****** */$lang['menu_sales']                      = 'Vendas';
+/* *********** */$lang['menu_sales_see']             = 'Venda';
 /* *********** */$lang['menu_sales_create']         = 'Criar';
 /* *********** */$lang['menu_sales_edit']           = 'Editar';
 /* ****** */$lang['menu_product']                   = 'Produtos';

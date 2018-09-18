@@ -57,11 +57,12 @@ class Sale extends Admin_Controller {
           foreach ($result as $row)
           $result_array[] = array(
               'label'       =>$row->prod_nome,
-              'codigo'         =>$row->prod_codigo,
-              'tamanho'         =>$row->prod_tamanho,
+              'codigo'      =>$row->prod_codigo,
+              'id'          =>$row->prod_id,
+              'tamanho'     =>$row->prod_tamanho,
               'cor'         =>$row->prod_cor,
               'estoque'     =>$row->prod_estoque,
-              'preco'     =>$row->prod_valor_de_venda,
+              'preco'       =>$row->prod_valor_de_venda,
             );
           echo json_encode($result_array);
         }
@@ -74,20 +75,27 @@ class Sale extends Admin_Controller {
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         
-        $this->form_validation->set_rules('date', 'lang:ven_date', 'required|date_valid');
-        $this->form_validation->set_rules('date', 'lang:ven_date', 'required|date_valid');
+        $this->form_validation->set_rules('total', 'lang:sale_total', 'required');
+        $this->form_validation->set_rules('date', 'lang:ven_date', 'required');
         
        
         if ($this->form_validation->run() == TRUE)
 		{
-            $date = date("Y-m-d");
-            $idproduct      = $this->input->post('idproduct');
-            $total          = $this->input->post('total');
-            $quantity       = $this->input->post('quantity');
-            $totalprice     = $this->input->post('totalprice');
+            
+            $date   = date("Y-m-d");
+            $total  = $this->input->post('total');
+            for( $i=0; $i<count($_POST['idproduct']); $i++ )
+            {
+                $idproduct  = $_POST['idproduct'][$i];
+                $quantity   = $_POST['quantity'][$i];
+                $totalprice = $_POST['totalprice'][$i];
+                $stock = $_POST['stock'][$i];
+            }
+            
 
-            if($this->modelsales->save($date, $total) && $this->modelsales->saveItem($idproduct,$quantity,$totalprice) ){
-                $this->modelsales->updateProduct($idproduct, $quantity);
+            
+            if(($this->modelsales->save($date, $total)) && ($this->modelsales->saveItem($idproduct, $quantity, $totalprice))){
+                $this->modelsales->updateProduct($idproduct, $quantity, $stock);
                 redirect('admin/sale/index', 'refresh');
             }else{
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

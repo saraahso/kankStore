@@ -171,6 +171,7 @@ CREATE TABLE `marca` (
 
 CREATE TABLE `produto` (
   `prod_id` int(11) NOT NULL,
+  `prod_codigo` int(11) NOT NULL,
   `prod_nome` text NOT NULL,
   `prod_tamanho` text NOT NULL,
   `prod_cor` text,
@@ -300,7 +301,6 @@ ALTER TABLE `groups`
 --
 ALTER TABLE `item_venda`
   ADD PRIMARY KEY (`itv_id`),
-  ADD KEY `itv_cod_venda` (`itv_cod_venda`),
   ADD KEY `itv_cod_prod` (`itv_cod_prod`);
 
 --
@@ -415,7 +415,6 @@ ALTER TABLE `produto`
 -- Restrições para tabelas `item_venda`
 --
 ALTER TABLE `item_venda`
-  ADD CONSTRAINT `item_venda_ibfk_1` FOREIGN KEY (`itv_cod_venda`) REFERENCES `venda` (`ven_id`),
   ADD CONSTRAINT `item_venda_ibfk_2` FOREIGN KEY (`itv_cod_prod`) REFERENCES `produto` (`prod_id`);
 
 --
