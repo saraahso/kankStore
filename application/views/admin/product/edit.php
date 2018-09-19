@@ -23,7 +23,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<?php echo form_open('admin/product/save_changes', array('class' => 'form-horizontal', 'id' => 'form-edit_product'));
                             foreach($products as $product){
-                        ?>
+						?>
+						<div class="form-group">
+							<?php echo lang('product_cod', 'cod', array('class' => 'col-sm-2 control-label')); ?>
+							<div class="col-sm-10">
+								<input type="text" id="cod" name="cod" readonly="readonly" class="form-control" value="<?php echo $product->prod_codigo ?>">
+							</div>
+						</div>
 						<div class="form-group">
 							<?php echo lang('product_name', 'name', array('class' => 'col-sm-2 control-label')); ?>
 							<div class="col-sm-10">

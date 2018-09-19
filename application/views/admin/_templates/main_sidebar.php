@@ -9,8 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- Sidebar user panel -->
 		<div class="user-panel">
 			<div class="pull-left image">
-				<img src="<?php echo base_url($avatar_dir . '/m_001.png'); ?>" class="img-circle"
-				 alt="User Image">
+				<img src="<?php echo base_url($avatar_dir . '/m_001.png'); ?>" class="img-circle" alt="User Image">
 			</div>
 			<div class="pull-left info">
 				<p>
@@ -153,25 +152,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</li>
 
 
-			<li class="header text-uppercase">
-				<?php echo $title; ?>
-			</li>
-			<li class="<?=active_link_controller('license')?>">
-				<a href="<?php echo site_url('admin/license'); ?>">
-					<i class="fa fa-legal"></i>
-					<span>
-						<?php echo lang('menu_license'); ?>
-					</span>
-				</a>
-			</li>
-			<li class="<?=active_link_controller('resources')?>">
-				<a href="<?php echo site_url('admin/resources'); ?>">
-					<i class="fa fa-cubes"></i>
-					<span>
-						<?php echo lang('menu_resources'); ?>
-					</span>
-				</a>
-			</li>
+
+
+
 		</ul>
 	</section>
 </aside>

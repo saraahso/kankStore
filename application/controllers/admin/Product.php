@@ -19,11 +19,11 @@ class Product extends Admin_Controller {
         $this->brands = $this->modelbrands->list_brands_drop();
 
         /* Title Page :: Common */
-        $this->page_title->push(lang('menu_products'));
+        $this->page_title->push(lang('menu_product'));
         $this->data['pagetitle'] = $this->page_title->show();
 
         /* Breadcrumbs :: Common */
-        $this->breadcrumbs->unshift(1, lang('menu_products'), 'admin/product');
+        $this->breadcrumbs->unshift(1, lang('menu_product'), 'admin/product');
     }
 
 	public function index()
@@ -59,6 +59,7 @@ class Product extends Admin_Controller {
 
 		/* Validate form input */
         $this->form_validation->set_rules('name', 'lang:product_name', 'required');
+        $this->form_validation->set_rules('cod', 'lang:product_cod');
         $this->form_validation->set_rules('size', 'lang:product_size');
         $this->form_validation->set_rules('color', 'lang:product_color');
         $this->form_validation->set_rules('stock', 'lang:product_stock', 'required');
@@ -70,6 +71,7 @@ class Product extends Admin_Controller {
 		if ($this->form_validation->run() == TRUE)
 		{
             $name           = $this->input->post('name');
+            $cod            = $this->input->post('cod');
             $size           = $this->input->post('size');
             $color          = $this->input->post('color');
             $stock          = $this->input->post('stock');
@@ -78,7 +80,7 @@ class Product extends Admin_Controller {
             $cost_value     = $this->input->post('cost_value');
             $sell_value     = $this->input->post('sell_value');
 
-            if($this->modelproducts->save($name,$size,$color,$stock,$category,$brand,$cost_value,$sell_value)){
+            if($this->modelproducts->save($name,$cod,$size,$color,$stock,$category,$brand,$cost_value,$sell_value)){
                 redirect('admin/product/index', 'refresh');
             }else{
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -94,6 +96,13 @@ class Product extends Admin_Controller {
 				'type'  => 'text',
                 'class' => 'form-control',
 				'value' => $this->form_validation->set_value('name'),
+            );
+            $this->data['cod'] = array(
+				'name'  => 'cod',
+				'id'    => 'cod',
+				'type'  => 'text',
+                'class' => 'form-control',
+				'value' => $this->form_validation->set_value('cod'),
             );
             $this->data['size'] = array(
 				'name'  => 'size',
@@ -164,7 +173,6 @@ class Product extends Admin_Controller {
 			redirect('auth', 'refresh');
         }
         
-
         /* Breadcrumbs */
         $this->breadcrumbs->unshift(2, lang('menu_products_edit'), 'admin/product/edit');
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
@@ -195,6 +203,7 @@ class Product extends Admin_Controller {
         if ($this->form_validation->run() == TRUE)
 		{
             $name           = $this->input->post('name');
+            $cod            = $this->input->post('cod');
             $size           = $this->input->post('size');
             $color          = $this->input->post('color');
             $stock          = $this->input->post('stock');
@@ -204,7 +213,7 @@ class Product extends Admin_Controller {
             $sell_value     = $this->input->post('sell_value');
             $id             = $this->input->post("id");
             
-            if($this->modelproducts->edit($name,$size,$color,$stock,$category,$brand,$cost_value,$sell_value)){
+            if($this->modelproducts->edit($name,$cod,$size,$color,$stock,$category,$brand,$cost_value,$sell_value,$id)){
                 redirect('admin/product/index', 'refresh');
             }else{
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

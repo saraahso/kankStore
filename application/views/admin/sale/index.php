@@ -34,15 +34,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php foreach($sales as $sale){ ?>
 								<tr>
 									<td>
-										<?php echo htmlspecialchars($sale->ven_data, ENT_QUOTES, 'UTF-8'); ?>
+										<?php echo date('d/m/Y', strtotime($sale->ven_data) ); ?>
 									</td>
 									<td>
 										<?php echo htmlspecialchars($sale->ven_total, ENT_QUOTES, 'UTF-8'); ?>
 									</td>
 
 									<td>
-										<?php echo anchor('admin/sale/see/'.$sale->ven_id, lang('actions_see')); ?>
-										<?php echo anchor('admin/sale/delete/'.$sale->ven_id, lang('actions_delete')); ?>
+										<?php echo anchor('admin/sale/see/'.$sale->ven_id, lang('actions_see'), array('class' => 'btn btn-primary btn-flat')); ?>
+										<?php echo anchor('admin/sale/delete/'.$sale->ven_id, lang('actions_delete'), array('class' => 'btn btn-danger btn-flat')); ?>
 									</td>
 								</tr>
 								<?php }?>

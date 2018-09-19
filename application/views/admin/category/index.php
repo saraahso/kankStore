@@ -30,15 +30,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<tbody>
 								<?php foreach ($categories as $cat):?>
 								<tr>
-									<td class="col-8">
+									<td class="col-md-10">
 										<?php echo htmlspecialchars($cat->cat_titulo, ENT_QUOTES, 'UTF-8'); ?>
 									</td>
 
-									<td class="col-2">
-										<?php echo anchor('admin/category/edit/'.$cat->cat_id, lang('actions_edit')); ?>
-									</td>
-									<td class="col-2">
-										<?php echo anchor('admin/category/delete/'.$cat->cat_id, lang('actions_delete')); ?>
+									<td class="col-md-2">
+										<?php echo anchor('admin/category/edit/'.$cat->cat_id, lang('actions_edit'), array('class' => 'btn btn-primary btn-flat')); ?>
+
+										<?php echo anchor('admin/category/delete/'.$cat->cat_id, lang('actions_delete'), array('class' => 'btn btn-danger btn-flat')); ?>
 									</td>
 								</tr>
 								<?php endforeach;?>

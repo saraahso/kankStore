@@ -18,10 +18,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php echo anchor('admin/product/create', '<i class="fa fa-plus"></i> '. lang('products_create_product'), array('class' => 'btn btn-block btn-primary btn-flat')); ?>
 						</h3>
 					</div>
-					<div class="box-body">
+					<div class="table-responsive">
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
+									<th>
+										<?php echo lang('product_cod');?>
+									</th>
 									<th>
 										<?php echo lang('product_name');?>
 									</th>
@@ -53,8 +56,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</tr>
 							</thead>
 							<tbody>
+
 								<?php foreach($products as $prod){ ?>
 								<tr>
+									<td>
+										<?php echo htmlspecialchars($prod->prod_codigo, ENT_QUOTES, 'UTF-8'); ?>
+									</td>
 									<td>
 										<?php echo htmlspecialchars($prod->prod_nome, ENT_QUOTES, 'UTF-8'); ?>
 									</td>
@@ -81,8 +88,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</td>
 
 									<td>
-										<?php echo anchor('admin/product/edit/'.$prod->prod_id, lang('actions_edit')); ?>
-										<?php echo anchor('admin/product/delete/'.$prod->prod_id, lang('actions_delete')); ?>
+										<?php echo anchor('admin/product/edit/'.$prod->prod_id, lang('actions_edit'), array('class' => 'btn btn-primary btn-flat')); ?>
+										<?php echo anchor('admin/product/delete/'.$prod->prod_id, lang('actions_delete'), array('class' => 'btn btn-danger btn-flat')); ?>
 									</td>
 								</tr>
 								<?php }?>

@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<section class="content">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-12">
 				<div class="box">
 					<div class="box-header with-border">
 						<h3 class="box-title">xxxx</h3>
@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<?php echo lang('sale_date'); ?>
 									</th>
 									<td>
-										<?php echo $info->ven_data; ?>
+										<?php echo date('d/m/Y', strtotime($info->ven_data));  ?>
 									</td>
 								</tr>
 								<?php endforeach;?>
@@ -105,7 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 
-			<div class="col-md-6">
+			<div class="col-md-12">
 				<div class="box">
 					<div class="box-header with-border">
 						<div class="btn-group">

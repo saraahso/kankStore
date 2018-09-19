@@ -94,7 +94,9 @@ class Sale extends Admin_Controller {
             
 
             
-            if(($this->modelsales->save($date, $total)) && ($this->modelsales->saveItem($idproduct, $quantity, $totalprice))){
+            if($this->modelsales->save($date, $total)){
+                $idvenda = $this->modelsales->lastID();    
+                $this->modelsales->saveItem($idproduct, $idvenda, $quantity, $totalprice);
                 $this->modelsales->updateProduct($idproduct, $quantity, $stock);
                 redirect('admin/sale/index', 'refresh');
             }else{

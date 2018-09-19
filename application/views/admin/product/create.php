@@ -25,6 +25,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							
 						?>
 						<div class="form-group">
+							<?php echo lang('product_cod', 'cod', array('class' => 'col-sm-2 control-label')); ?>
+							<div class="col-sm-10">
+								<?php echo form_input($cod);?>
+							</div>
+						</div>
+						<div class="form-group">
 							<?php echo lang('product_name', 'name', array('class' => 'col-sm-2 control-label')); ?>
 							<div class="col-sm-10">
 								<?php echo form_input($name);?>

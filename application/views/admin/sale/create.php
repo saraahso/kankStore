@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<div class="form-group">
 							<?php echo lang('ven_date', 'date', array('class' => 'col-sm-2 control-label')); ?>
-							<div class="col-sm-10">
+							<div class="col-sm-6">
 								<input type="date" class="form-control" name="date" required>
 							</div>
 						</div>
@@ -43,40 +43,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									Adicionar</button>
 							</div>
 						</div>
-						<table id="tbventas" class="table table-striped table-hover">
-							<thead>
-								<tr>
-									<th>Codigo</th>
-									<th>Nome</th>
+						<div class="table-responsive">
+							<table id="tbventas" class="table table-striped table-hover ">
+								<thead>
+									<tr>
+										<th scope="col">Codigo</th>
+										<th scope="col">Nome</th>
 
-									<th>Tamanho</th>
-									<th>Quantidade</th>
-									<th>Cor</th>
-									<th>Preço</th>
-									<th>Total</th>
-								</tr>
-							</thead>
-							<tbody>
+										<th scope="col">Tamanho</th>
+										<th scope="col">Quantidade</th>
+										<th scope="col">Cor</th>
+										<th scope="col">Preço</th>
+										<th scope="col">Total</th>
+									</tr>
+								</thead>
+								<tbody>
 
-							</tbody>
-						</table>
-
+								</tbody>
+							</table>
+						</div>
 						<div class="form-group">
-							<div class="col-md-3">
+							<div class="col-md-4">
 								<div class="input-group">
 									<span class="input-group-addon">Subtotal:</span>
 									<input type="text" class="form-control" placeholder="0.00" name="subtotal" readonly="readonly">
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-4">
 								<div class="input-group">
 									<span class="input-group-addon">Desconto:</span>
 									<input type="text" class="form-control" placeholder="0.00" name="descuento" onkeyup="myFunction()">
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-4">
 								<div class="input-group">
-									<?php echo lang('sale_total', 'total', array('class' => 'col-sm-2 control-label')); ?>
+									<span class="input-group-addon" name="total" id="total">Total:</span>
+
 									<?php echo form_input($total);?>
 								</div>
 							</div>
