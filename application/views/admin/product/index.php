@@ -81,10 +81,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<?php echo htmlspecialchars($prod->mar_titulo, ENT_QUOTES, 'UTF-8'); ?>
 									</td>
 									<td>
-										<?php echo htmlspecialchars($prod->prod_valor_de_custo, ENT_QUOTES, 'UTF-8'); ?>
+										<?php 
+										setlocale(LC_MONETARY,"pt_BR.UTF-8");
+										echo money_format("%n", $prod->prod_valor_de_custo); ?>
+
 									</td>
 									<td>
-										<?php echo htmlspecialchars($prod->prod_valor_de_venda, ENT_QUOTES, 'UTF-8'); ?>
+										<?php 
+										setlocale(LC_MONETARY,"pt_BR.UTF-8");
+										echo money_format("%n", $prod->prod_valor_de_venda); ?>
 									</td>
 
 									<td>

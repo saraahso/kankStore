@@ -192,6 +192,7 @@ class Product extends Admin_Controller {
 
        /* Validate form input */
         $this->form_validation->set_rules('name', 'lang:product_name', 'required');
+        $this->form_validation->set_rules('cod', 'lang:product_cod');
         $this->form_validation->set_rules('size', 'lang:product_size');
         $this->form_validation->set_rules('color', 'lang:product_color');
         $this->form_validation->set_rules('stock', 'lang:product_stock', 'required');
@@ -207,8 +208,8 @@ class Product extends Admin_Controller {
             $size           = $this->input->post('size');
             $color          = $this->input->post('color');
             $stock          = $this->input->post('stock');
-            $category       = $this->input->post('categories');
-            $brand          = $this->input->post('brands');
+            $category       = $this->input->post('category');
+            $brand          = $this->input->post('brand');
             $cost_value     = $this->input->post('cost_value');
             $sell_value     = $this->input->post('sell_value');
             $id             = $this->input->post("id");

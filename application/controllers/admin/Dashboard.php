@@ -29,23 +29,28 @@ class Dashboard extends Admin_Controller {
             $this->data['breadcrumb'] = $this->breadcrumbs->show();
 
             /* Data */
-            $this->data['count_users']       = $this->dashboard_model->get_count_record('users');
-            $this->data['count_groups']      = $this->dashboard_model->get_count_record('groups');
-            $this->data['disk_totalspace']   = $this->dashboard_model->disk_totalspace(DIRECTORY_SEPARATOR);
-            $this->data['disk_freespace']    = $this->dashboard_model->disk_freespace(DIRECTORY_SEPARATOR);
-            $this->data['disk_usespace']     = $this->data['disk_totalspace'] - $this->data['disk_freespace'];
-            $this->data['disk_usepercent']   = $this->dashboard_model->disk_usepercent(DIRECTORY_SEPARATOR, FALSE);
-            $this->data['memory_usage']      = $this->dashboard_model->memory_usage();
-            $this->data['memory_peak_usage'] = $this->dashboard_model->memory_peak_usage(TRUE);
-            $this->data['memory_usepercent'] = $this->dashboard_model->memory_usepercent(TRUE, FALSE);
-
-
-            /* TEST */
-            $this->data['url_exist']    = is_url_exist('http://www.domprojects.com');
-
+            $this->data['count_users']      = $this->dashboard_model->get_count_record('users');
+            $this->data['count_sale']       = $this->dashboard_model->get_count_record('venda');
+            $this->data['count_products']   = $this->dashboard_model->get_count_record('produto');
+            $this->data['count_sale_day']   = $this->dashboard_model->get_sale_day('venda');
+            $this->data['years']            = $this->dashboard_model->years();
+            $this->data['months']           = $this->dashboard_model->months();
+            
 
             /* Load Template */
             $this->template->admin_render('admin/dashboard/index', $this->data);
         }
+    }
+
+    public function getData(){
+        $year = $this->input->post("year");
+		$resultados = $this->dashboard_model->amount($year);
+		echo json_encode($resultados);
+    }
+    
+    public function getDataDay(){
+        $month = $this->input->post("month");
+		$resultados = $this->dashboard_model->amount($month);
+		echo json_encode($resultados);
 	}
 }

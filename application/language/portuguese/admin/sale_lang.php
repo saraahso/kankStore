@@ -26,3 +26,4 @@ $lang['product_sell_value']         = 'Valor da unidade';
 $lang['product_search']             = 'Selecionar Produto';
 $lang['search-product']             = 'Produto';
 $lang['ven_date']                   = 'Data da Venda';
+$lang['sale_tipoPagamento']         = 'Tipo de Pagamento';
