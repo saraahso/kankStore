@@ -23,8 +23,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url($frameworks_dir . '/jquery/jquery.min.js'); ?>"></script>
 <script src="<?php echo base_url($frameworks_dir . '/bootstrap/js/bootstrap.min.js'); ?>"></script>
 <script src="<?php echo base_url($frameworks_dir . '/jquery-ui/jquery-ui.js'); ?>"></script>
-<script src="<?php echo base_url('assets/custom.js'); ?>"></script>
 <script src="<?php echo base_url($plugins_dir . '/slimscroll/slimscroll.min.js'); ?>"></script>
+<script src="<?php echo base_url($plugins_dir . '/highcharts/highcharts.js'); ?>"></script>
+<script src="<?php echo base_url($plugins_dir . '/highcharts/exporting.js'); ?>"></script>
+<script src="<?php echo base_url($plugins_dir . '/highcharts/export-data.js'); ?>"></script>
+<script src="<?php echo base_url('assets/custom.js'); ?>"></script>
+<script>
+	var base_url = '<?php echo base_url() ?>';
+</script>
+<script src="<?php echo base_url('assets/customChart.js'); ?>"></script>
 <?php if ($mobile == TRUE): ?>
 <script src="<?php echo base_url($plugins_dir . '/fastclick/fastclick.min.js'); ?>"></script>
 <?php endif; ?>

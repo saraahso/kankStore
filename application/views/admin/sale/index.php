@@ -28,6 +28,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<th>
 										<?php echo lang('sale_total');?>
 									</th>
+									<th>
+										<?php echo lang('sale_tipoPagamento');?>
+									</th>
+									<th>
+										<?php echo lang('menu_actions');?>
+									</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -37,9 +43,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<?php echo date('d/m/Y', strtotime($sale->ven_data) ); ?>
 									</td>
 									<td>
-										<?php echo htmlspecialchars($sale->ven_total, ENT_QUOTES, 'UTF-8'); ?>
+										<?php 
+										setlocale(LC_MONETARY,"pt_BR.UTF-8");
+										echo money_format("%n", $sale->ven_total); ?>
 									</td>
-
+									<td>
+										<?php echo htmlspecialchars($sale->ven_tipo_pagamento, ENT_QUOTES, 'UTF-8'); ?>
+									</td>
 									<td>
 										<?php echo anchor('admin/sale/see/'.$sale->ven_id, lang('actions_see'), array('class' => 'btn btn-primary btn-flat')); ?>
 										<?php echo anchor('admin/sale/delete/'.$sale->ven_id, lang('actions_delete'), array('class' => 'btn btn-danger btn-flat')); ?>

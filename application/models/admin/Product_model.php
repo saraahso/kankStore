@@ -65,4 +65,6 @@ class Product_model extends CI_Model {
         $this->db->where('prod_id', $id);
         return $this->db->update('produto', $dados);
     }
+
+    
 }

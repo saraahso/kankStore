@@ -17,84 +17,51 @@ class Dashboard_model extends CI_Model {
     }
 
 
-    public function disk_totalspace($dir = DIRECTORY_SEPARATOR)
+    public function get_sale_day($table)
     {
-        return disk_total_space($dir);
+         $this->db->where('ven_total')->get('venda');
+        return $this->db->count_all_results();
+
+        return $query;
     }
 
-
-    public function disk_freespace($dir = DIRECTORY_SEPARATOR)
-    {
-        return disk_free_space($dir);
+     public function years(){
+		$this->db->select("YEAR(ven_data) as year");
+		$this->db->from("venda");
+		$this->db->group_by("year");
+		$this->db->order_by("year","desc");
+		$resultados = $this->db->get();
+		return $resultados->result();
+	}
+	public function amount($year){
+		$this->db->select("MONTH(ven_data) as month, SUM(ven_total) as total");
+        $this->db->from("venda");
+        $this->db->where("ven_data >=", $year. "-01-01");
+        $this->db->where("ven_data <=", $year. "-12-31");
+		$this->db->group_by("month");
+		$this->db->order_by("month");
+		$resultados = $this->db->get();
+		return $resultados->result();
     }
+    
+    public function months(){
+		$this->db->select("MONTH(ven_data) as month");
+		$this->db->from("venda");
+		$this->db->group_by("month");
+		$this->db->order_by("month","desc");
+		$resultados = $this->db->get();
+		return $resultados->result();
+	}
+    public function amount_day($year, $month){
+		$this->db->select("DAY(ven_data) as day, SUM(ven_total) as total");
+        $this->db->from("venda");
+        $this->db->where("ven_data >=", $year, $month. "-01");
+        $this->db->where("ven_data <=", $year, $month. "-31");
+		$this->db->group_by("day");
+		$this->db->order_by("day");
+		$resultados = $this->db->get();
+		return $resultados->result();
+	}
 
-
-    public function disk_usespace($dir = DIRECTORY_SEPARATOR)
-    {
-        return $this->disk_totalspace($dir) - $this->disk_freespace($dir);
-    }
-
-
-    public function disk_freepercent($dir = DIRECTORY_SEPARATOR, $display_unit = FALSE)
-    {
-        if ($display_unit === FALSE)
-        {
-            $unit = NULL;
-        }
-        else
-        {
-            $unit = ' %';
-        }
-
-        return round(($this->disk_freespace($dir) * 100) / $this->disk_totalspace($dir), 0).$unit;
-    }
-
-
-    public function disk_usepercent($dir = DIRECTORY_SEPARATOR, $display_unit = FALSE)
-    {
-        if ($display_unit === FALSE)
-        {
-            $unit = NULL;
-        }
-        else
-        {
-            $unit = ' %';
-        }
-
-        return round(($this->disk_usespace($dir) * 100) / $this->disk_totalspace($dir), 0).$unit;
-    }
-
-
-    public function memory_usage()
-    {
-        return memory_get_usage();
-    }
-
-
-    public function memory_peak_usage($real = TRUE)
-    {
-        if ($real)
-        {
-            return memory_get_peak_usage(TRUE);
-        }
-        else
-        {
-            return memory_get_peak_usage(FALSE);
-        }
-    }
-
-
-    public function memory_usepercent($real = TRUE, $display_unit = FALSE)
-    {
-        if ($display_unit === FALSE)
-        {
-            $unit = NULL;
-        }
-        else
-        {
-            $unit = ' %';
-        }
-
-        return round(($this->memory_usage() * 100) / $this->memory_peak_usage($real), 0).$unit;
-    }
+    
 }

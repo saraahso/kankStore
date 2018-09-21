@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div class="box-body">
 						<table class="table table-striped table-hover">
 							<tbody>
-								<?php foreach ($sale_info as $info):?>
+								<?php foreach ($sales as $info):?>
 								<tr>
 									<th>
 										<?php echo lang('sale_date'); ?>
@@ -81,7 +81,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<?php echo htmlspecialchars($product->itv_qtd, ENT_QUOTES, 'UTF-8'); ?>
 									</td>
 									<td>
-										<?php echo htmlspecialchars($product->prod_valor_de_venda, ENT_QUOTES, 'UTF-8'); ?>
+										<?php 
+										setlocale(LC_MONETARY,"pt_BR.UTF-8");
+										echo money_format("%n", $product->prod_valor_de_venda); ?>
+
 									</td>
 								</tr>
 								<?php }?>
@@ -89,13 +92,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</table>
 						<table class="table table-striped table-hover">
 							<tbody>
-								<?php foreach ($sale_info as $info):?>
+								<?php foreach ($sales as $info):?>
 								<tr>
 									<th>
 										<?php echo lang('sale_total'); ?>
 									</th>
+
 									<td>
-										<?php echo $info->ven_total; ?>
+										<?php 
+										setlocale(LC_MONETARY,"pt_BR.UTF-8");
+										echo money_format("%n", $info->ven_total); ?>
+									</td>
+									<th>
+										<?php echo lang('sale_tipoPagamento'); ?>
+									</th>
+									<td>
+										<?php echo htmlspecialchars($info->ven_tipo_pagamento, ENT_QUOTES, 'UTF-8'); ?>
 									</td>
 								</tr>
 								<?php endforeach;?>

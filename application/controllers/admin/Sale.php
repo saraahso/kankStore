@@ -64,7 +64,13 @@ class Sale extends Admin_Controller {
               'estoque'     =>$row->prod_estoque,
               'preco'       =>$row->prod_valor_de_venda,
             );
-          echo json_encode($result_array);
+
+            //validação estoque
+            if($row->prod_estoque >= 1){
+                echo json_encode($result_array);
+            }else{
+                echo 'Não há Produto';
+            }
         }
       }
     }
@@ -82,8 +88,9 @@ class Sale extends Admin_Controller {
         if ($this->form_validation->run() == TRUE)
 		{
             
-            $date   = date("Y-m-d");
+            $date   = $this->input->post('date');
             $total  = $this->input->post('total');
+            $tipoPagamento = $this->input->post('tipoPagamento');
             for( $i=0; $i<count($_POST['idproduct']); $i++ )
             {
                 $idproduct  = $_POST['idproduct'][$i];
@@ -94,7 +101,7 @@ class Sale extends Admin_Controller {
             
 
             
-            if($this->modelsales->save($date, $total)){
+            if($this->modelsales->save($date, $total, $tipoPagamento)){
                 $idvenda = $this->modelsales->lastID();    
                 $this->modelsales->saveItem($idproduct, $idvenda, $quantity, $totalprice);
                 $this->modelsales->updateProduct($idproduct, $quantity, $stock);
@@ -129,40 +136,29 @@ class Sale extends Admin_Controller {
                 'class' => 'form-control',
 				'value' => $this->form_validation->set_value('idproduct'),
             );
+             $this->data['tipoPagamento'] = array(
+                'dinheiro'  => 'Dinheiro',
+                'debito'    => 'Cartão de Débito',
+                'credito'   => 'Cartão de Crédito',
+				
+            );           
             $this->data['total'] = array(
-				'name'  => 'total',
-				'id'    => 'total',
-                'type'  => 'text',
-                'placeholder' => '0.00',
-                'readonly'=>'true',
-                'class' => 'form-control',
-				'value' => $this->form_validation->set_value('total'),
+				'name'          => 'total',
+				'id'            => 'total',
+                'type'          => 'text',
+                'placeholder'   => '0.00',
+                'readonly'      =>'true',
+                'class'         => 'form-control',
+				'value'         => $this->form_validation->set_value('total'),
             );
          
             
             /* Load Template */
 		    $this->template->admin_render('admin/sale/create', $this->data);
         }
-
-        
-       
+     
     }
 
-    public function add_product(){
-
-            $this->data['products'] = $this->products;
-        
-            $itv_valor     = $this->input->post('itv_valor');
-            $itv_qtd        = $this->input->post('itv_qtd');
-            $itv_cod_prod             = $this->input->post("itv_cod_prod");
-            
-            if($this->modelsales->add_sale($itv_valor,$itv_qtd,$itv_cod_prod)){
-                redirect('admin/sale/create', 'refresh');
-            }else{
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-            }
-		
-    }
 
     public function see($id)
 	{
@@ -170,14 +166,14 @@ class Sale extends Admin_Controller {
         $this->breadcrumbs->unshift(2, lang('menu_sale_see'), 'admin/sale/see');
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
 
-        /* Data */
-        $id = (int) $id;
-
-        $this->data['sale_info'] = $this->modelsales->list_sale($id);
-        foreach ($this->data['sale_info'] as $k => $info)
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['products'] = $this->products;
+        $this->data['sales'] = $this->modelsales->list_sale($id);
+        foreach ($this->data['sales'] as $k => $info)
         {
-            $this->data['sale_info'][$k]->products = $this->modelsales->list_products_sale($info->ven_id)->result();
+            $this->data['sales'][$k]->products = $this->modelsales->list_products_sale($id);
         }
+        
 
         /* Load Template */
 		$this->template->admin_render('admin/sale/see', $this->data);
@@ -196,70 +192,11 @@ class Sale extends Admin_Controller {
         }
         else
         {
+            $this->modelsales->deleteItem($id);
             $this->modelsales->delete($id);
             redirect('admin/sale/index', 'refresh');
         }
     }
     
-    public function edit($id)
-	{
-		if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin() OR ! $id OR empty($id))
-		{
-			redirect('auth', 'refresh');
-        }
-        
-
-        /* Breadcrumbs */
-        $this->breadcrumbs->unshift(2, lang('menu_sales_edit'), 'admin/sale/edit');
-        $this->data['breadcrumb'] = $this->breadcrumbs->show();
-
-        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-        $this->data['sales'] = $this->modelsales->list_sale($id);
-        $this->data['brands'] = $this->brands;
-        $this->data['categories'] = $this->categories;
-            
-        
-        /* Load Template */
-        $this->template->admin_render('admin/sale/edit', $this->data);
-	}
-
-    public function save_changes(){
-
-
-       /* Validate form input */
-        $this->form_validation->set_rules('name', 'lang:sale_name', 'required');
-        $this->form_validation->set_rules('size', 'lang:sale_size');
-        $this->form_validation->set_rules('color', 'lang:sale_color');
-        $this->form_validation->set_rules('stock', 'lang:sale_stock', 'required');
-        //$this->form_validation->set_rules('categoria', 'lang:sale_category', 'required');
-        //$this->form_validation->set_rules('marca', 'lang:sale_brand');
-        $this->form_validation->set_rules('cost_value', 'lang:sale_cost_value', 'required');
-        $this->form_validation->set_rules('sell_value', 'lang:sale_sell_value', 'required');
-
-        if ($this->form_validation->run() == TRUE)
-		{
-            $name           = $this->input->post('name');
-            $size           = $this->input->post('size');
-            $color          = $this->input->post('color');
-            $stock          = $this->input->post('stock');
-            $category       = $this->input->post('categories');
-            $brand          = $this->input->post('brands');
-            $cost_value     = $this->input->post('cost_value');
-            $sell_value     = $this->input->post('sell_value');
-            $id             = $this->input->post("id");
-            
-            if($this->modelsales->edit($name,$size,$color,$stock,$category,$brand,$cost_value,$sell_value)){
-                redirect('admin/sale/index', 'refresh');
-            }else{
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-            }
-		}
-		else
-		{
-            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-        }
-
-    }
-    
+   
 }
