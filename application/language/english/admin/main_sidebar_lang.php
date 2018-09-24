@@ -21,6 +21,7 @@ $lang['menu_search'] = 'Search';
 
 
 /* * */$lang['menu_administration']             = 'Administration';
+/* ****** */$lang['menu_categories']            = 'Categorias';
 /* ****** */$lang['menu_users']                 = 'Users';
 /* *********** */$lang['menu_users_profile']    = 'Profile';
 /* *********** */$lang['menu_users_deactivate'] = 'Deactivate';

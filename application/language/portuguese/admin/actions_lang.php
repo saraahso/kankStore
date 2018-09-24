@@ -11,16 +11,17 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['actions_cancel']         = 'Cancelar';
+$lang['actions_back']           = 'Voltar';
 $lang['actions_create']         = 'Criar';
 $lang['actions_default_values'] = 'Valores padrões';
-$lang['actions_edit']           = 'Editar';
+$lang['actions_edit']           = '<i class="fa fa-pencil"></i> Editar';
 $lang['actions_ok']             = 'Ok';
 $lang['actions_no']             = 'Não';
-$lang['actions_reset']          = 'Reiniciar';
-$lang['actions_see']            = 'Ver';
+$lang['actions_reset']          = 'Limpar';
+$lang['actions_see']            = '<i class="fa fa-eye"></i> Ver';
 $lang['actions_submit']         = 'Enviar';
 $lang['actions_yes']            = 'Sim';
-$lang['actions_delete']         = 'Excluir';
+$lang['actions_delete']         = '<i class="fa fa-trash"></i> Excluir';
 
 $lang['actions_security_error']     = 'Erro de segurança';
 $lang['actions_file_install_exist'] = 'Vecê deve %s dos arquivos de instalação.';

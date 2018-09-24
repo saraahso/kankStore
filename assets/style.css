@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400');
+
+body {
+    background: #000;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.logo,
+.insta {
+    text-align: center;
+}
+
+.logo b {
+    font-size: 50px;
+    font-weight: 300;
+    color: #fee;
+    text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #dccccc, 0 0 0.5em #cca6c9, 0 0 0.1em #7f5982, 0 10px 3px #000;
+}
+
+.logo b span {
+    animation: blink linear infinite 2s;
+}
+
+@keyframes blink {
+    78% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+
+    79% {
+        color: #333;
+    }
+
+    80% {
+
+        text-shadow: none;
+    }
+
+    81% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+
+    82% {
+        color: #333;
+        text-shadow: none;
+    }
+
+    83% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+
+    92% {
+        color: #333;
+        text-shadow: none;
+    }
+
+    92.5% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+}

@@ -1,19 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Category extends CI_Controller {
+class Category extends Admin_Controller {
 
     public function __construct(){
         parent::__construct();
-        if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin())
-        {
-            redirect('auth/login', 'refresh');
-        }
-        $this->load->model('categories_model', 'modelcategories');
-        $this->categories = $this->modelcategories->list_categories();
-
-        /* Load :: Common */
+ 
+         /* Load :: Common */
         $this->lang->load('admin/category');
+        $this->load->model('admin/category_model', 'modelcategories');
+        $this->categories = $this->modelcategories->list_categories();
 
         /* Title Page :: Common */
         $this->page_title->push(lang('menu_categories'));
@@ -25,42 +21,43 @@ class Category extends CI_Controller {
 
 	public function index()
 	{
-        $this->load->library('table');
-        $dados['categories']= $this->categories;
-        
-        /* Title Page */
-        $this->page_title->push(lang('menu_dashboard'));
-        $this->data['pagetitle'] = $this->page_title->show();
+               
+        if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin())
+        {
+            redirect('auth/login', 'refresh');
+        }
+        else
+        {
+            /* Breadcrumbs */
+            $this->data['breadcrumb'] = $this->breadcrumbs->show();
 
-        /* Breadcrumbs */
-        $this->data['breadcrumb'] = $this->breadcrumbs->show();
+             /* Get all categories */
+            $this->data['categories'] = $this->categories;
 
-         /* Load Template */
-        $this->template->admin_render('admin/category/index', $this->data);
-        
+            /* Load Template */
+            $this->template->admin_render('admin/category/index', $this->data);
+
+        }
     }
 
 
     public function create()
 	{
         /* Breadcrumbs */
-        $this->breadcrumbs->unshift(2, lang('menu_users_create'), 'admin/category/create');
+        $this->breadcrumbs->unshift(2, lang('menu_categories_create'), 'admin/category/create');
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
 
-        /* Variables */
-		$tables = $this->config->item('tables', 'ion_auth');
-
 		/* Validate form input */
-		$this->form_validation->set_rules('txt-category', 'Nome da Categoria',
-        'required|min_length[3]|is_unique[category.titulo]');
+        $this->form_validation->set_rules('titulo', 'lang:category_titulo', 'required|is_unique[categoria.cat_titulo]');
 
 		if ($this->form_validation->run() == TRUE)
 		{
-			$titulo = strtolower($this->input->post('titulo'));
-
-			$additional_data = array(
-				'titulo' => $this->input->post('titulo'),
-			);
+            $titulo = strtolower($this->input->post('titulo'));
+            if($this->modelcategories->save($titulo)){
+                redirect('admin/category/index', 'refresh');
+            }else{
+                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            }
 		}
 		else
 		{
@@ -74,13 +71,12 @@ class Category extends CI_Controller {
 				'value' => $this->form_validation->set_value('titulo'),
 			);
 			
-
             /* Load Template */
             $this->template->admin_render('admin/category/create', $this->data);
         }
     }
     
-    public function delete()
+    public function delete($id)
 	{
         if ( ! $this->ion_auth->logged_in())
         {
@@ -92,20 +88,11 @@ class Category extends CI_Controller {
         }
         else
         {
-            $this->load->view('admin/category/delete');
+            $this->modelcategories->delete($id);
+            redirect('admin/category/index', 'refresh');
         }
     }
     
-
-    public function excluir($id){
-
-        if($this->modelcategories->excluir($id)){
-            redirect(base_url('admin_kankStore/category'));
-        }else{
-            echo "Houve um erro no sistema!";
-        }
-    }
-
     public function edit($id)
 	{
 		if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin() OR ! $id OR empty($id))
@@ -114,83 +101,39 @@ class Category extends CI_Controller {
 		}
 
         /* Breadcrumbs */
-        $this->breadcrumbs->unshift(2, lang('menu_category_edit'), 'admin/category/edit');
+        $this->breadcrumbs->unshift(2, lang('menu_categories_edit'), 'admin/category/edit');
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
 
-        /* Variables */
-		$category = $this->ion_auth->category($id)->row();
-
-		/* Validate form input */
-        $this->form_validation->set_rules('titulo', $this->lang->line('edit_category_validation_titulo_label'), 'required|alpha_dash');
-
-		if (isset($_POST) && ! empty($_POST))
-		{
-			if ($this->form_validation->run() == TRUE)
-			{
-				$category_update = $this->ion_auth->update_category($id, $_POST['titulo']);
-
-				if ($category_update)
-				{
-					$this->session->set_flashdata('message', $this->lang->line('edit_category_saved'));
-				}
-				else
-				{
-					$this->session->set_flashdata('message', $this->ion_auth->errors());
-				}
-
-				redirect('admin/category', 'refresh');
-			}
-		}
-
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-        $this->data['category']   = $category;
-
-		$readonly = $this->config->item('admin_category', 'ion_auth') === $category->titulo ? 'readonly' : '';
-
-		$this->data['titulo'] = array(
-			'type'    => 'text',
-			'name'    => 'titulo',
-			'id'      => 'titulo',
-			'value'   => $this->form_validation->set_value('titulo', $category->name),
-            'class'   => 'form-control',
-			$readonly => $readonly
-		);
-	
-
+        $this->data['categories'] = $this->modelcategories->list_category($id);
+            
+        
         /* Load Template */
         $this->template->admin_render('admin/category/edit', $this->data);
 	}
 
-    public function alterar($id){
+    public function save_changes(){
 
-        $this->load->library('table');
-        $dados['categories']= $this->modelcategories->listar_category($id);
-        // Dados a serem enviados para o Cabeçalho
-        $dados['titulo'] = 'Painel Administrativo';
-        $dados['subtitulo'] = 'Categoria';
+        /* Validate form input */
+        $this->form_validation->set_rules('titulo', 'lang:category_titulo', 'required|is_unique[categoria.cat_titulo]');
 
-        $this->load->view('backend/template/html-header',$dados);
-        $this->load->view('backend/template/template');
-        $this->load->view('backend/alterar-category');
-        $this->load->view('backend/template/html-footer');
-
-    }
-    
-    public function salvar_alteracoes(){
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('txt-category', 'Nome da Categoria',
-            'required|min_length[3]|is_unique[category.titulo]');
-        if ($this->form_validation->run() == FALSE){
-            $this->index();
-        }else{
-            $titulo= $this->input->post('txt-category');
-            $id=$this->input->post('txt-id');
-            if($this->modelcategories->alterar($titulo, $id)){
-                redirect(base_url('admin_kankStore/category'));
+        if ($this->form_validation->run() == TRUE)
+		{
+            $titulo = strtolower($this->input->post('titulo'));
+            $id     = $this->input->post("id");
+            
+            if($this->modelcategories->edit($titulo, $id)){
+                redirect('admin/category/index', 'refresh');
             }else{
-                echo "Houve um erro no sistema!";
+                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
             }
+		}
+		else
+		{
+            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
         }
+
     }
     
 }
