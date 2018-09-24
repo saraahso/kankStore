@@ -2,6 +2,7 @@
 
 - CodeIgniter 3.x  
 - AdminLTE 2.3.x
+- Composer Speed NFe
 
 
 ## Browser Compatibility
