@@ -35,6 +35,7 @@ class Dashboard extends Admin_Controller {
             $this->data['count_sale_day']   = $this->dashboard_model->get_sale_day('venda');
             $this->data['years']            = $this->dashboard_model->years();
             $this->data['months']           = $this->dashboard_model->months();
+            $this->data['sales']            = $this->dashboard_model->custo_venda();
             
 
             /* Load Template */
@@ -43,15 +44,9 @@ class Dashboard extends Admin_Controller {
     }
 
     public function getData(){
-        $year = $this->input->post("year");
-		$resultados = $this->dashboard_model->amount($year);
+        $year           = $this->input->post("year");
+		$resultados     = $this->dashboard_model->amount($year);
 		echo json_encode($resultados);
     }
     
-    public function getDataDay(){
-        $month = $this->input->post("month");
-        $year = $this->input->post("year");
-		$resultados = $this->dashboard_model->amount_day($year, $month);
-		echo json_encode($resultados);
-	}
 }

@@ -63,5 +63,13 @@ class Dashboard_model extends CI_Model {
 		return $resultados->result();
 	}
 
+	public function custo_venda(){
+		$this->db->select('ven_id, ven_tipo_pagamento, MONTH(ven_data) as month, SUM(ven_total) as total, SUM(ven_total_custo) as totalcusto');
+		$this->db->from('venda');;
+        $this->db->group_by("month");
+		$this->db->order_by("month");
+        $resultados = $this->db->get();
+		return $resultados->result();
+	}
     
 }

@@ -55,6 +55,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<th scope="col">Cor</th>
 										<th scope="col">Preço</th>
 										<th scope="col">Total</th>
+										<th scope="col">V. custo</th>
+										<th scope="col">VC. Total</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -68,6 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<span class="input-group-addon">Subtotal:</span>
 									<input type="text" class="form-control" placeholder="0.00" name="subtotal" readonly="readonly">
 								</div>
+
 							</div>
 							<div class="col-md-3">
 								<div class="input-group">
@@ -84,9 +87,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<div class="col-md-3">
 								<div class="input-group">
 									<span class="input-group-addon" name="total" id="total">Total:</span>
-
 									<?php echo form_input($total);?>
 								</div>
+
+
+								<?php echo form_input($totalcost);?>
+
 							</div>
 						</div>
 

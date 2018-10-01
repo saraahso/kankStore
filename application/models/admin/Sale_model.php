@@ -34,7 +34,7 @@ class Sale_model extends CI_Model {
 
     public function list_products_sale($id){
         $this->db->select('v.ven_id, v.ven_data, i.itv_id, i.itv_cod_venda, i.itv_cod_prod, i.itv_qtd, i.itv_valor, p.prod_id, 
-        p.prod_nome, p.prod_tamanho, p.prod_cor, p.prod_estoque, p.prod_valor_de_venda, v.ven_total, p.prod_marca,p. prod_categoria, 
+        p.prod_nome, p.prod_tamanho, p.prod_cor, p.prod_estoque, p.prod_valor_de_venda, p.prod_valor_de_custo, v.ven_total, p.prod_marca,p. prod_categoria, 
         c.cat_titulo, m.mar_titulo');
         $this->db->from('item_venda i');
         $this->db->join('venda v', 'i.itv_cod_venda = v.ven_id');
@@ -46,7 +46,7 @@ class Sale_model extends CI_Model {
     }
 
     function getproducts($valor){
-        $this->db->select('prod_nome, prod_codigo, prod_id, prod_categoria,prod_tamanho, prod_cor, prod_estoque, prod_valor_de_venda, cat_titulo, mar_titulo');
+        $this->db->select('prod_nome, prod_codigo, prod_id, prod_categoria,prod_tamanho, prod_cor, prod_estoque, prod_valor_de_venda, prod_valor_de_custo, cat_titulo, mar_titulo');
         $this->db->from('produto');
         $this->db->join('categoria', 'produto.prod_categoria = categoria.cat_id');
         $this->db->join('marca', 'produto.prod_marca = marca.mar_id');
@@ -65,9 +65,10 @@ class Sale_model extends CI_Model {
         return $this->db->delete('venda');
     }
 
-    public function save($date, $total, $tipoPagamento){
+    public function save($date, $total, $costtotal, $tipoPagamento){
         $dados['ven_data']              = $date;
         $dados['ven_total']             = $total;
+        $dados['ven_total_custo']       = $costtotal;
         $dados['ven_tipo_pagamento']    = $tipoPagamento;
         return $this->db->insert('venda', $dados);
     }

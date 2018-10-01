@@ -63,14 +63,10 @@ class Sale extends Admin_Controller {
               'cor'         =>$row->prod_cor,
               'estoque'     =>$row->prod_estoque,
               'preco'       =>$row->prod_valor_de_venda,
+              'precoCusto'  =>$row->prod_valor_de_custo,
             );
 
-            //validação estoque
-            if($row->prod_estoque >= 1){
-                echo json_encode($result_array);
-            }else{
-                echo 'Não há Produto';
-            }
+            echo json_encode($result_array);
         }
       }
     }
@@ -90,6 +86,7 @@ class Sale extends Admin_Controller {
             
             $date   = $this->input->post('date');
             $total  = $this->input->post('total');
+            $totalcost  = $this->input->post('totalcost');
             $tipoPagamento = $this->input->post('tipoPagamento');
             for( $i=0; $i<count($_POST['idproduct']); $i++ )
             {
@@ -99,9 +96,8 @@ class Sale extends Admin_Controller {
                 $stock = $_POST['stock'][$i];
             }
             
-
-            
-            if($this->modelsales->save($date, $total, $tipoPagamento)){
+           
+            if($this->modelsales->save($date, $total, $totalcost, $tipoPagamento)){
                 $idvenda = $this->modelsales->lastID();    
                 $this->modelsales->saveItem($idproduct, $idvenda, $quantity, $totalprice);
                 $this->modelsales->updateProduct($idproduct, $quantity, $stock);
@@ -150,6 +146,15 @@ class Sale extends Admin_Controller {
                 'readonly'      =>'true',
                 'class'         => 'form-control',
 				'value'         => $this->form_validation->set_value('total'),
+            );
+            $this->data['totalcost'] = array(
+				'name'          => 'totalcost',
+				'id'            => 'totalcost',
+                'type'          => 'hidden',
+                'placeholder'   => '0.00',
+                'readonly'      =>'true',
+                'class'         => 'form-control',
+				'value'         => $this->form_validation->set_value('totalcost'),
             );
          
             

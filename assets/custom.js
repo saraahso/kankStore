@@ -5,6 +5,16 @@ $(document).ready(function () {
 		source: "getproducts",
 
 		select: function (event, ui) {
+
+
+			//validação estoque
+			if (ui.item.estoque >= 1) {
+				stock = ui.item.estoque;
+			} else {
+				stock = ui.item.estoque;
+				alert("O produto não consta em estoque");
+			}
+
 			data =
 				ui.item.id +
 				"*" +
@@ -14,11 +24,13 @@ $(document).ready(function () {
 				"*" +
 				ui.item.tamanho +
 				"*" +
-				ui.item.estoque +
+				stock +
 				"*" +
 				ui.item.cor +
 				"*" +
-				ui.item.preco;
+				ui.item.preco +
+				"*" +
+				ui.item.precoCusto;
 			$('[name="titleP"]').val(data);
 			console.log(data);
 			$("#btn-agregar").val(data);
@@ -48,6 +60,18 @@ $("#btn-agregar").on("click", function () {
 			infoproducto[6] +
 			"'> <p>" +
 			infoproducto[6] +
+			"</p></td>";
+		html +=
+			"<td><input type='hidden' name='pricecost[]' value='" +
+			infoproducto[7] +
+			"'>" +
+			infoproducto[7] +
+			"</td>";
+		html +=
+			"<td><input type='hidden' readonly='readonly' name='cost[]' value='" +
+			infoproducto[7] +
+			"'> <p>" +
+			infoproducto[7] +
 			"</p></td>";
 		html +=
 			"<td><input type='hidden' name='stock[]' value='" +
@@ -91,6 +115,21 @@ $(document).on("keyup mouseup", "#tbventas input.quantity", function () {
 		.children("p")
 		.text(totalprice.toFixed(2));
 	sumar();
+
+	pricecost = Number(
+		$(this)
+		.closest("tr")
+		.find("td:eq(7)")
+		.text()
+	);
+	console.log("preço" + pricecost);
+	cost = quantity * pricecost;
+	$(this)
+		.closest("tr")
+		.find("td:eq(8)")
+		.children("p")
+		.text(cost.toFixed(2))
+	sumar();
 });
 
 function myFunction() {
@@ -110,13 +149,29 @@ function sumar() {
 			);
 	});
 
+	totalcost = 0;
+	$("#tbventas tbody tr").each(function () {
+		totalcost =
+			totalcost +
+			Number(
+				$(this)
+				.closest("tr")
+				.find("td:eq(8)")
+				.text()
+			);
+	});
+
+
+
 	$("input[name=subtotal]").val(subtotal.toFixed(2));
 	descuento = Number($("input[name=descuento]").val());
 	console.log(descuento);
 	total = subtotal - descuento;
 	$("input[name=total]").val(total.toFixed(2));
+	$("input[name=totalcost]").val(totalcost.toFixed(2));
 
 	$(".subtotal").text(subtotal.toFixed(2));
 	$(".descuento").text(descuento.toFixed(2));
 	$(".total").text(total.toFixed(2));
+	$(".totalcost").text(totalcost.toFixed(2));
 }
