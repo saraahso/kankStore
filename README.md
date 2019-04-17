@@ -3,7 +3,6 @@
 - CodeIgniter 3.x  
 - AdminLTE 2.3.x
 
-
 ## Browser Compatibility
 Support for most major browsers including Chrome, Firefox, IE9+, Opera and Safari.
 
